@@ -34,7 +34,7 @@ class _AppMainScreenState extends State<AppMainScreen> {
             selectedIndex = value;
           },
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Iconsax.home),
