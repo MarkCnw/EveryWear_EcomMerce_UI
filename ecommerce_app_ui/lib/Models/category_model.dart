@@ -3,10 +3,10 @@ class Category {
   Category({required this.name, required this.image});
 }
 
-List<Category>fcategory = [
+List<Category>category = [
   Category(
     name: "woman",
-    image: "assets/woman.png",
+    image: "assets/women.png",
   ),
   Category(
     name: "Men",

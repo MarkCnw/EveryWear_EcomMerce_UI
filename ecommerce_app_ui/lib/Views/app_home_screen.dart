@@ -1,10 +1,14 @@
+import 'package:ecommerce_app_ui/Models/category_model.dart';
+import 'package:ecommerce_app_ui/Models/model.dart';
+import 'package:ecommerce_app_ui/Utils/colors.dart';
+import 'package:ecommerce_app_ui/Views/items_detail_screen.dart';
 import 'package:ecommerce_app_ui/Widget/banner.dart';
+import 'package:ecommerce_app_ui/Widget/curated_items.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AppHomeScreen extends StatefulWidget {
   const AppHomeScreen({super.key});
-
   @override
   State<AppHomeScreen> createState() => _AppHomeScreenState();
 }
@@ -12,6 +16,7 @@ class AppHomeScreen extends StatefulWidget {
 class _AppHomeScreenState extends State<AppHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -57,7 +62,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -65,6 +70,56 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
               height: 20,
             ),
             const MyBanner(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "See All",
+                    style: TextStyle(
+                      fontSize: 16,
+                      letterSpacing: 0,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    "See All",
+                    style: TextStyle(
+                      fontSize: 16,
+                      letterSpacing: 0,
+                      color: Colors.black45,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                    category.length,
+                    (index) => InkWell(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: fbackgroundColor1,
+                                  backgroundImage: AssetImage(
+                                    category[index].image,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(category[index].name)
+                            ],
+                          ),
+                        )),
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Row(
@@ -93,34 +148,25 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: List.generate(categor, generator),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "shop By Category",
-                    style: TextStyle(
-                      fontSize: 16,
-                      letterSpacing: 0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w600,
+                children: List.generate(fashionEcommerceApp.length, (index) {
+                  final eCommerceItems = fashionEcommerceApp[index];
+                  return Padding(
+                    padding: index == 0 ? const EdgeInsets.symmetric(horizontal: 20) : const EdgeInsets.only(right: 20),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ItemsDetailScreen(eCommerceApp: eCommerceItems),
+                          ),
+                        );
+                      },
+                      child: CuratedItems(eCommerceItems: eCommerceItems, size: size),
                     ),
-                  ),
-                  Text(
-                    "See All",
-                    style: TextStyle(
-                      fontSize: 16,
-                      letterSpacing: 0,
-                      color: Colors.black45,
-                    ),
-                  )
-                ],
+                  );
+                }),
               ),
-            ),
+            )
           ],
         ),
       ),
